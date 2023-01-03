@@ -5,7 +5,7 @@ containers: fresh: {
         dockerfile: "./Dockerfile"
 
         buildArgs: {
-            "arg1": "secret://revision/token"
+            "REVISION": "secret://revision/token"
         }
     }
     
