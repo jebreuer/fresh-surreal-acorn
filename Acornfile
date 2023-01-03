@@ -1,14 +1,17 @@
 containers: fresh: {
     build: {
         context: "."
-
         dockerfile: "./Dockerfile"
-
         buildArgs: {
             "REVISION": "secret://revision/token"
         }
     }
     
+    if args.dev {
+        cmd: #"run -A --watch=static/,routes/ main.ts"#
+        dirs: "/app": "./"
+    }
+
     ports: publish: "8000/http"
 }
 
