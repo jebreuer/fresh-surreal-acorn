@@ -1,0 +1,23 @@
+containers: fresh: {
+    build: {
+        context: "."
+
+        dockerfile: "./Dockerfile"
+
+        buildArgs: {
+            "arg1": "secret://revision/token"
+        }
+    }
+    
+    ports: publish: "8000/http"
+}
+
+secrets: {
+    "revision": {
+        type: "token"
+        params: {
+            length: 12
+            characters: "abcdedfghijklmnopqrstuvwxyz0123456789"
+        }
+    }
+}
