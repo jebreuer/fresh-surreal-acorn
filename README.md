@@ -1,11 +1,18 @@
-# fresh project
+# Run fresh and surrealdb on acorn
+
+This project should bring three things together:
+- [Acorn](https://www.acorn.io/)
+- [Fresh](https://fresh.deno.dev/)
+- [SurrealDB](https://surrealdb.com/)
 
 ### Usage
 
-Start the project:
-
+You can make changes to the fresh app's source code and have a hot-reload experience:
 ```
-deno task start
+$ acorn run -n fresh-surreal -i .
 ```
 
-This will watch the project directory and restart as necessary.
+Run without the dev stuff:
+```
+$ acorn run -n fresh-surreal .
+```
