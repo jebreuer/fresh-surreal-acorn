@@ -14,5 +14,5 @@ $ acorn run -n fresh-surreal -i .
 
 Run without the dev stuff:
 ```
-$ acorn run -n fresh-surreal .
+$ acorn run -n fresh-surreal . --revision $(git rev-parse HEAD)
 ```

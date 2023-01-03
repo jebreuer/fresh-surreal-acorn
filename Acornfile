@@ -1,9 +1,11 @@
+args: revision: "$(git rev-parse HEAD)"
+
 containers: fresh: {
     build: {
         context: "."
         dockerfile: "./Dockerfile"
         buildArgs: {
-            "REVISION": "secret://revision/token"
+            "REVISION": args.revision
         }
     }
     
@@ -13,14 +15,4 @@ containers: fresh: {
     }
 
     ports: publish: "8000/http"
-}
-
-secrets: {
-    "revision": {
-        type: "token"
-        params: {
-            length: 12
-            characters: "abcdedfghijklmnopqrstuvwxyz0123456789"
-        }
-    }
 }
