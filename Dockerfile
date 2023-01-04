@@ -1,4 +1,4 @@
-FROM denoland/deno:1.29.1
+FROM lukechannings/deno:v1.29.1
 
 ARG REVISION
 ENV DENO_DEPLOYMENT_ID=${REVISION}
