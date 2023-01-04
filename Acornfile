@@ -1,18 +1,42 @@
 args: revision: "$(git rev-parse HEAD)"
 
-containers: fresh: {
-    build: {
-        context: "."
-        dockerfile: "./Dockerfile"
-        buildArgs: {
-            "REVISION": args.revision
+containers: {
+    fresh: {
+        build: {
+            context: "."
+            dockerfile: "./Dockerfile"
+            buildArgs: {
+                "REVISION": args.revision
+            }
         }
-    }
-    
-    if args.dev {
-        cmd: #"run -A --watch=static/,routes/ main.ts"#
-        dirs: "/app": "./"
+
+        if args.dev {
+            cmd: #"run -A --watch=static/,routes/ main.ts"#
+            dirs: "/app": "./"
+        }
+
+        ports: publish: "8000/http"
+
+        dependsOn: ["surreal"]
     }
 
-    ports: publish: "8000/http"
+    surreal: {
+        image: "surrealdb/surrealdb"
+        cmd: #"start"#
+        ports: 8000
+        env: [
+            "USER=fresh",
+            "PASS=fresh",
+            "LOG=trace",
+            //"STRICT=false",
+            //"ADDR=10.0.0.0/8"
+        ]
+    }
+}
+
+jobs: seedsurreal: {
+    image: "surrealdb/surrealdb"
+    cmd: #"import --conn http://surreal:8000 --db fresh --ns fresh --pass fresh --user fresh /seed/seed.sql"#
+    dirs: "/seed": "./seed/"
+    dependsOn: ["surreal"]
 }
